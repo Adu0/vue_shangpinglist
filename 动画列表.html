@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        li {
+            border: 1px dashed #999;
+            margin: 5px;
+            line-height: 35px;
+            padding-left: 5px;
+            font-size: 18px;
+            width: 100%;
+            list-style: none;
+        }
+        li:hover {
+            background-color: hotpink;
+            transition: all 0.2s ease;
+        }
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateY(80px);
+        }
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+        .v-move {
+            transition: all 0.8s ease;
+        }
+        .v-leave-active {
+            position: absolute;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="form-group">
+            <label for="exampleInputEmail1">ID
+            </label>
+            <input type="text" v-model="id" class="form-control" id="exampleInputEmail1">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">name
+            </label>
+            <input type="text" v-model="name" class="form-control" id="exampleInputEmail1">
+        </div>
+        <input type="button" value="添加" class="btn-success" @click="add">
+        <transition-group tag="ul" appear>
+            <li v-for="(item, i) in list" :key="item.id" @click='del(i)' class="bg-success">
+                {{item.id}}-----{{item.name}}
+            </li>
+        </transition-group>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                list: [{
+                        id: 1,
+                        name: '张三'
+                    },
+                    {
+                        id: 2,
+                        name: '李四'
+                    },
+                    {
+                        id: 3,
+                        name: '王二'
+                    }
+                ]
+            },
+            methods: {
+                add() {
+                    this.list.push({
+                        id: this.id,
+                        name: this.name
+                    })
+                    this.id = this.name = ''
+                },
+                del(i) {
+                    this.list.splice(i, 1)
+                }
+               
+            }
+        })
+    </script>
+</body>
+
+</html>
